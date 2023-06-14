@@ -4,11 +4,30 @@ const btns = list.querySelectorAll('li');
 const speed = 500;
 let enableEvent = true;
 
-console.log(btns);
-console.log(Array.from(btns));
-
 window.addEventListener('scroll', activation);
 window.addEventListener('resize', modifyPos);
+window.addEventListener(
+	'mousewheel',
+	(e) => {
+		// evnet 객체 값 찍어보기
+		// console.log(e);
+		e.preventDefault(); // 마우스 기본 스크롤 기능 막기
+
+		const active = list.querySelector('li.on');
+		const active_index = Array.from(btns).indexOf(active);
+
+		if (e.deltaY > 0) {
+			console.log('wheel down');
+			if (active_index === btns.length - 1) return;
+			moveScroll(active_index + 1);
+		} else {
+			console.log('wheel up');
+			if (active_index === 0) return;
+			moveScroll(active_index - 1);
+		}
+	},
+	{ passive: false }
+);
 
 btns.forEach((btn, idx) => {
 	btn.addEventListener('click', () => enableEvent && moveScroll(idx));
