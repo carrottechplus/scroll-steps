@@ -1,10 +1,16 @@
 const secs = document.querySelectorAll('section');
 const btns = document.querySelectorAll('ul li');
-const baseLine = -window.innerHeight / 3;
 const speed = 500;
 
-window.addEventListener('scroll', () => {
+window.addEventListener('scroll', activation);
+
+btns.forEach((btn, idx) => {
+	btn.addEventListener('click', () => moveScroll(idx));
+});
+
+function activation() {
 	const scroll = window.scrollY;
+	const baseLine = -window.innerHeight / 2;
 
 	secs.forEach((_, idx) => {
 		if (scroll >= secs[idx].offsetTop + baseLine) {
@@ -15,14 +21,12 @@ window.addEventListener('scroll', () => {
 			secs[idx].classList.add('on');
 		}
 	});
-});
+}
 
-btns.forEach((btn, idx) => {
-	btn.addEventListener('click', () => {
-		new Anime(window, {
-			prop: 'scroll',
-			value: secs[idx].offsetTop,
-			duration: speed,
-		});
+function moveScroll(idx) {
+	new Anime(window, {
+		prop: 'scroll',
+		value: secs[idx].offsetTop,
+		duration: speed,
 	});
-});
+}
