@@ -1,6 +1,7 @@
 const secs = document.querySelectorAll('section');
 const btns = document.querySelectorAll('ul li');
 const baseLine = -window.innerHeight / 3;
+const speed = 500;
 
 window.addEventListener('scroll', () => {
 	const scroll = window.scrollY;
@@ -18,8 +19,10 @@ window.addEventListener('scroll', () => {
 
 btns.forEach((btn, idx) => {
 	btn.addEventListener('click', () => {
-		const topCon = secs[idx].offsetTop;
-		console.log(topCon);
-		window.scrollTo({ top: topCon, behavior: 'smooth' });
+		new Anime(window, {
+			prop: 'scroll',
+			value: secs[idx].offsetTop,
+			duration: speed,
+		});
 	});
 });
